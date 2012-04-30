@@ -65,7 +65,7 @@ def get_yubikey_icon(images_path, _yubikey, _revision):
 
 def notify_yubikey(yubikey, revision, action, icon):
     #print "Notify : %s" % ("%s%s %s" % (yubikey, revision, action))
-    n = pynotify.Notification("%s%s %s" % (yubikey, revision, action), '', icon)
+    n = pynotify.Notification("YubiKey " + action, revision, icon)
     n.set_urgency(pynotify.URGENCY_LOW)
     n.show()
 
