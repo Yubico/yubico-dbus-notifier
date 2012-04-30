@@ -1,0 +1,4 @@
+YubiKey D-Bus notifier
+
+This is a small D-Bus signal generator that broadcasts a message (signal)
+to the D-Bus system bus whenever a YubiKey is inserted or removed.
