@@ -14,6 +14,7 @@ import pynotify
 import traceback
 
 images_path = ''
+notification = None
 
 def signal_handler(*args, **kwargs):
     if kwargs['member'] == 'add' or kwargs['member'] == 'remove':
@@ -65,9 +66,8 @@ def get_yubikey_icon(images_path, _yubikey, _revision):
 
 def notify_yubikey(yubikey, revision, action, icon):
     #print "Notify : %s" % ("%s%s %s" % (yubikey, revision, action))
-    n = pynotify.Notification("YubiKey " + action, revision, icon)
-    n.set_urgency(pynotify.URGENCY_LOW)
-    n.show()
+    notification.update("YubiKey " + action, revision, icon)
+    notification.show()
 
 if __name__ == '__main__':
     import dbus.mainloop.glib
@@ -75,6 +75,9 @@ if __name__ == '__main__':
 
     if not pynotify.init("YubiKey notifications"):
         sys.exit(1)
+
+    notification = pynotify.Notification("YubiKey")
+    notification.set_urgency(pynotify.URGENCY_LOW)
 
     images_path = os.path.abspath(os.path.dirname(sys.argv[0]))
 
