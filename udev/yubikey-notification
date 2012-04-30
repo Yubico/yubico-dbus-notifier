@@ -1,0 +1,41 @@
+#!/usr/bin/python
+"""
+Send add/remove D-Bus notifications to the system bus when a YubiKey
+is inserted or removed.
+
+Include any potentially useful information we get in the environment
+from udev in the message sent.
+"""
+
+import os
+import sys
+import dbus
+import traceback
+
+if len(sys.argv) != 2:
+    sys.stderr.write("Syntax: %s action\n" % (sys.argv[0]))
+    sys.exit(1)
+
+action = sys.argv[1]
+
+if action != "add" and action != "remove":
+    sys.stderr.write("%s: Invalid action '%s'\n" % (sys.argv[0], sys.argv[1]))
+    sys.exit(1)
+
+data = {'source': 'udev'}
+for key in os.environ.keys():
+    if key.startswith('DEV') or key.startswith('ID_'):
+        data[key.lower()] = os.environ[key]
+
+try:
+    bus = dbus.SystemBus()
+    msg = dbus.lowlevel.SignalMessage('/com/yubico/YubiKeyNotification', \
+                                          'com.yubico.YubiKeyNotification', \
+                                          action)
+    msg.append(data)
+    bus.send_message(msg)
+except dbus.DBusException:
+    traceback.print_exc()
+    sys.exit(1)
+
+sys.exit(0)

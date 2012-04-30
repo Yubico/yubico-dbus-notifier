@@ -1,0 +1,5 @@
+# YubiKey add
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0010", TAG+="yubikey-notification", RUN+="yubikey-notification add"
+
+# YubiKey remove
+ACTION=="remove", SUBSYSTEM=="usb", ENV{ID_VENDOR_ID}=="1050", ENV{ID_MODEL_ID}=="0010", RUN+="yubikey-notification remove"
