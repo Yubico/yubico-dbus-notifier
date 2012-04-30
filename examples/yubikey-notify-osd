@@ -1,0 +1,86 @@
+#!/usr/bin/python
+"""
+Shows an OSD (On Screen Display) whenever a D-Bus notification
+about an added/removed YubiKey is received.
+
+Uses python-notify to send the OSD, which again uses the D-Bus
+to communicate with the notify-osd daemon.
+"""
+
+import os
+import sys
+import dbus
+import pynotify
+import traceback
+
+images_path = ''
+
+def signal_handler(*args, **kwargs):
+    if kwargs['member'] == 'add' or kwargs['member'] == 'remove':
+        for arg in args:
+            if type(arg) == dbus.Dictionary and \
+                    'source' in arg and arg['source'] == 'udev':
+                try:
+                    action = 'inserted'
+                    if kwargs['member'] == 'remove':
+                        action = 'removed'
+                    yubikey = arg.get('id_model', 'Unknown YubiKey').replace('_', ' ')
+                    revision = parse_yubikey_revision(arg.get('id_revision', ''))
+                    icon = get_yubikey_icon(images_path, yubikey, revision)
+                    notify_yubikey(yubikey, revision, action, icon)
+                except Exception:
+                    # don't die on exceptions handling a single event
+                    traceback.print_exc()
+                    pass
+                return None
+
+    print "\n*** Unrecognized D-Bus signal received :"
+    for arg in args:
+        if type(arg) == dbus.Dictionary:
+            for k in arg.keys():
+                print "  %-20s => %s" % (k, arg[k])
+        else:
+            print " ARG (%s):       %s" % (type(arg), str(arg))
+    print "kwargs :"
+    print kwargs
+
+def parse_yubikey_revision(revision):
+    """ Parse string like '0213' into ' 2.1.3' """
+    if revision:
+        rev = int(revision)
+        rev_c = rev / 100
+        rev = rev % 100
+        rev_d = rev / 10
+        rev = rev % 10
+        revision = " %i.%i.%i" % (rev_c, rev_d, rev)
+    return revision
+
+def get_yubikey_icon(images_path, _yubikey, _revision):
+    """ Return a suitable icon (pixbuf, URL, anything pynotify handles) for this YubiKey. """
+    icon_file = os.path.join(images_path, 'yubico-y128.png')
+    if os.path.exists(icon_file):
+        return 'file://' + icon_file
+    else:
+        sys.stderr.write("icon file %s not found\n" % (icon_file))
+
+def notify_yubikey(yubikey, revision, action, icon):
+    #print "Notify : %s" % ("%s%s %s" % (yubikey, revision, action))
+    n = pynotify.Notification("%s%s %s" % (yubikey, revision, action), '', icon)
+    n.set_urgency(pynotify.URGENCY_LOW)
+    n.show()
+
+if __name__ == '__main__':
+    import dbus.mainloop.glib
+    import gobject
+
+    if not pynotify.init("YubiKey notifications"):
+        sys.exit(1)
+
+    images_path = os.path.abspath(os.path.dirname(sys.argv[0]))
+
+    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+    bus = dbus.SystemBus()
+    bus.add_signal_receiver(signal_handler, dbus_interface='com.yubico.YubiKeyNotification', \
+                            interface_keyword='dbus_interface', member_keyword='member')
+    loop = gobject.MainLoop()
+    loop.run()
