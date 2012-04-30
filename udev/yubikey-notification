@@ -27,6 +27,10 @@ for key in os.environ.keys():
     if key.startswith('DEV') or key.startswith('ID_'):
         data[key.lower()] = os.environ[key]
 
+if not data.get('id_vendor_id'):
+    # we get invoked twice for 'add', but only once with all data
+    sys.exit(0)
+
 try:
     bus = dbus.SystemBus()
     msg = dbus.lowlevel.SignalMessage('/com/yubico/YubiKeyNotification', \
