@@ -1,0 +1,39 @@
+2012-05-03  Fredrik Thulin <fredrik@yubico.com>
+
+	* COPYING, README: Add more text and license.
+
+2012-05-03  Fredrik Thulin <fredrik@yubico.com>
+
+	* examples/yubikey-notify-osd,
+	yubico-osd-notifier/yubico-osd-notifier: rename
+
+2012-04-30  Fredrik Thulin <fredrik@yubico.com>
+
+	* examples/yubikey-notify-osd: Replace any already showing
+	notifications.
+
+2012-04-30  Fredrik Thulin <fredrik@yubico.com>
+
+	* examples/yubikey-notify-osd: Nicer looking notifications.
+
+2012-04-30  Fredrik Thulin <fredrik@yubico.com>
+
+	* examples/yubikey-notify-osd: Example OSD notification daemon.
+
+2012-04-30  Fredrik Thulin <fredrik@yubico.com>
+
+	* udev/yubikey-notification: Get rid of extra 'add' event.
+
+2012-04-30  Fredrik Thulin <fredrik@yubico.com>
+
+	* .gitignore: init
+
+2012-04-30  Fredrik Thulin <fredrik@yubico.com>
+
+	* udev/rules.d/71-yubikey-notification.rules,
+	udev/yubikey-notification: init
+
+2012-04-30  Fredrik Thulin <fredrik@yubico.com>
+
+	* init
+
