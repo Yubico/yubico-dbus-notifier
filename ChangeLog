@@ -1,5 +1,18 @@
 2012-05-03  Fredrik Thulin <fredrik@yubico.com>
 
+	* yubico-osd-notifier/yubico-osd-notifier: Nicer error output.
+
+2012-05-03  Fredrik Thulin <fredrik@yubico.com>
+
+	* yubico-osd-notifier/yubico-osd-notifier: Default to Ubuntu path
+	for icon files.
+
+2012-05-03  Fredrik Thulin <fredrik@yubico.com>
+
+	* ChangeLog: sync
+
+2012-05-03  Fredrik Thulin <fredrik@yubico.com>
+
 	* ChangeLog: sync
 
 2012-05-03  Fredrik Thulin <fredrik@yubico.com>
