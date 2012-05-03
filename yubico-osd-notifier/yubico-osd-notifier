@@ -13,7 +13,9 @@ import dbus
 import pynotify
 import traceback
 
-images_path = ''
+# Path to notification icons. Will use dirname of this script if this
+# path does not exist.
+images_path = '/usr/share/yubico-osd-notifier'
 notification = None
 
 def signal_handler(*args, **kwargs):
@@ -79,7 +81,8 @@ if __name__ == '__main__':
     notification = pynotify.Notification("YubiKey")
     notification.set_urgency(pynotify.URGENCY_LOW)
 
-    images_path = os.path.abspath(os.path.dirname(sys.argv[0]))
+    if not os.path.exists(images_path):
+        images_path = os.path.abspath(os.path.dirname(sys.argv[0]))
 
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
     bus = dbus.SystemBus()
