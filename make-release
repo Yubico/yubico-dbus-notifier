@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+if [ ! -f COPYING -o ! -d udev -o ! -d yubico-osd-notifier ]; then
+    echo "$0: Wrong working directory"
+    exit 1
+fi
+
+ver="$1"
+
+if [ "x$ver" = "x" ]; then
+    echo "Syntax : $0 new-version"
+    exit 1
+fi
+
+git2cl > ChangeLog
+git commit -m "sync" ChangeLog
+git tag -s -m "Version $ver" "$ver"
+git archive --format=tar --prefix=yubico-dbus-notifier-${ver}/ ${ver} | gzip > ../yubico-dbus-notifier-${ver}.tar.gz
