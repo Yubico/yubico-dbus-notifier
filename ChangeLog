@@ -1,5 +1,13 @@
 2012-05-03  Fredrik Thulin <fredrik@yubico.com>
 
+	* make-release: init
+
+2012-05-03  Fredrik Thulin <fredrik@yubico.com>
+
+	* ChangeLog: init
+
+2012-05-03  Fredrik Thulin <fredrik@yubico.com>
+
 	* COPYING, README: Add more text and license.
 
 2012-05-03  Fredrik Thulin <fredrik@yubico.com>
