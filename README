@@ -1,4 +1,36 @@
-YubiKey D-Bus notifier
+Yubico D-Bus notifier
+
+Copyright (c) 2012 Yubico AB
+See the file COPYING for licence statement.
+
+
+=========
+  About
+=========
 
 This is a small D-Bus signal generator that broadcasts a message (signal)
 to the D-Bus system bus whenever a YubiKey is inserted or removed.
+
+In the directory yubico-osd-notifier/ there is a small receiver for these
+signals sent by udev/yubikey-notification (which is invoked by udev rules)
+that will request an on-screen notification showing when a YubiKey is
+inserted or removed.
+
+
+================
+  Installation
+================
+
+It is expected that this code will be installed on Ubuntu systems using
+the package yubico-dbus-notifier available in ppa:fredrikt/yubico
+
+  $ sudo add-apt-repository ppa:fredrikt/yubico
+  $ sudo apt-get update
+  $ sudo apt-get install yubico-dbus-notifier
+
+
+================
+
+Comments, feedback and patches welcome!
+
+Fredrik Thulin <fredrik@yubico.com> 2012-05-03
