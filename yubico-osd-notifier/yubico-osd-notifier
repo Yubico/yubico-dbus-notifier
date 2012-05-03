@@ -37,15 +37,16 @@ def signal_handler(*args, **kwargs):
                     pass
                 return None
 
-    print "\n*** Unrecognized D-Bus signal received :"
+    sys.stderr.write("\n*** %s: Unrecognized D-Bus signal received :\n" % (sys.argv[0]))
     for arg in args:
         if type(arg) == dbus.Dictionary:
             for k in arg.keys():
-                print "  %-20s => %s" % (k, arg[k])
+                sys.stderr.write("  %-20s => %s\n" % (k, arg[k]))
         else:
-            print " ARG (%s):       %s" % (type(arg), str(arg))
-    print "kwargs :"
-    print kwargs
+            sys.stderr.write(" ARG (%s):       %s\n" % (type(arg), str(arg)))
+    sys.stderr.write("kwargs :\n")
+    sys.stderr.write(str(kwargs))
+    sys.stderr.write("\n")
 
 def parse_yubikey_revision(revision):
     """ Parse string like '0213' into ' 2.1.3' """
@@ -64,7 +65,7 @@ def get_yubikey_icon(images_path, _yubikey, _revision):
     if os.path.exists(icon_file):
         return 'file://' + icon_file
     else:
-        sys.stderr.write("icon file %s not found\n" % (icon_file))
+        sys.stderr.write("%s: Icon file %s not found\n" % (sys.argv[0], icon_file))
 
 def notify_yubikey(yubikey, revision, action, icon):
     #print "Notify : %s" % ("%s%s %s" % (yubikey, revision, action))
