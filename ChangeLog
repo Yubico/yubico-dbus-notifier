@@ -1,5 +1,13 @@
 2012-05-04  Fredrik Thulin <fredrik@yubico.com>
 
+	* .gitattributes: init
+
+2012-05-04  Fredrik Thulin <fredrik@yubico.com>
+
+	* ChangeLog: sync
+
+2012-05-04  Fredrik Thulin <fredrik@yubico.com>
+
 	* yubico-osd-notifier/yubico-osd-notifier.1: init
 
 2012-05-03  Fredrik Thulin <fredrik@yubico.com>
