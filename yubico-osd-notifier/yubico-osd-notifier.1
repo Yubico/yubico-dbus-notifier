@@ -1,0 +1,33 @@
+.\" Copyright (c) 2012 Yubico AB
+.\" See the file COPYING for license statement.
+.\"
+.de URL
+\\$2 \(laURL: \\$1 \(ra\\$3
+..
+.if \n[.g] .mso www.tmac
+.TH yubico-osd-notifier "1" "May 2012" "yubico-dbus-notifier"
+
+.SH NAME
+yubico-osd-notifier \(hy show on-screen notifications when YubiKeys are inserted/removed
+
+.SH SYNOPSIS
+.B yubico-osd-notifier
+
+.SH DESCRIPTION
+This is a small daemon that will request on-screen notifications
+from notification-daemon (or similar) whenever a YubiKey is inserted
+or removed.
+
+It is not intended to be started manually, but rather at login time
+by the user's desktop environment.
+
+.SH "BUGS"
+Report yubico-dbus-notifier/yubico-osd-notifier bugs in
+.URL "https://github.com/Yubico/yubico-dbus-notifier/issues/" "the issue tracker"
+
+.SH "SEE ALSO"
+The
+.URL "https://github.com/Yubico/yubico-dbus-notifier/" "yubico-dbus-notifier home page"
+.PP
+YubiKeys can be obtained from
+.URL "http://www.yubico.com/" "Yubico" "."
